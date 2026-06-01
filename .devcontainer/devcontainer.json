@@ -1,4 +1,4 @@
-{
+jh'{
   "name": "GeoData Dev",
   "dockerComposeFile": ["./docker-compose.yml"],
   "service": "devcontainer",
@@ -7,6 +7,7 @@
   "features": {
     "ghcr.io/devcontainers/features/docker-in-docker:2": {
       "version": "latest",
+      "moby": false,
       "dockerDashComposeVersion": "v2"
     }
   },
