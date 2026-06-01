@@ -1,4 +1,4 @@
-jh'{
+{
   "name": "GeoData Dev",
   "dockerComposeFile": ["./docker-compose.yml"],
   "service": "devcontainer",
@@ -12,6 +12,7 @@ jh'{
     }
   },
 
+  "postCreateCommand": "uv pip install --system -r /workspace/requirements.txt",
   "postStartCommand": "git config --global --add safe.directory /workspace",
   "forwardPorts": [5433],
   "portsAttributes": {
@@ -20,7 +21,16 @@ jh'{
 
   "customizations": {
     "vscode": {
-      "extensions": []
+      "extensions": [
+        "ms-python.python",
+        "ms-python.vscode-pylance",
+        "ms-toolsai.jupyter",
+        "mtxr.sqltools",
+        "mtxr.sqltools-driver-pg"
+      ],
+      "settings": {
+        "python.defaultInterpreterPath": "/usr/local/bin/python"
+      }
     }
   },
 

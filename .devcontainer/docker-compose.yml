@@ -1,11 +1,11 @@
 services:
   devcontainer:
     build:
-      context: .
-      dockerfile: Dockerfile
+      context: ..
+      dockerfile: .devcontainer/docker/Dockerfile
     volumes:
       - ../:/workspace:cached
-      - pip-cache:/root/.cache/pip
+      - uv-cache:/root/.cache/uv
     environment:
       - POSTGRES_HOST=pg
       - POSTGRES_PORT=5432
@@ -42,7 +42,7 @@ services:
 
 volumes:
   pg-data: {}
-  pip-cache: {}
+  uv-cache: {}
 
 networks:
   dev-network: {}

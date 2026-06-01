@@ -5,8 +5,8 @@ ENV PYTHONDONTWRITEBYTECODE=1
 ENV PYTHONUNBUFFERED=1
 ENV TZ=America/Montreal
 ENV LANG=en_US.UTF-8
+ENV UV_LINK_MODE=copy
 
-# Libs système : GDAL, PROJ, GEOS, client PostgreSQL
 RUN apt-get update && apt-get install -y --no-install-recommends \
     gdal-bin \
     libgdal-dev \
@@ -17,7 +17,10 @@ RUN apt-get update && apt-get install -y --no-install-recommends \
     postgresql-client \
     && rm -rf /var/lib/apt/lists/*
 
-# Installer uv pour gérer les environnements virtuels rapidement
-RUN pip install --upgrade pip && pip install uv
+RUN pip install --upgrade pip uv
+
+RUN uv pip install --system \
+    shapely pyproj fiona geopandas psycopg2 sqlalchemy \
+    && uv pip install --system "gdal==$(gdal-config --version)"
 
 WORKDIR /workspace

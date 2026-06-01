@@ -1,30 +1,55 @@
-## porc-devcontainer-base
+# poc-devcontainer-base
 
-Quick setup
+Environnement de développement conteneurisé pour Python géospatial + PostgreSQL/PostGIS.
 
-1. Create and activate the venv
+## Prérequis
+
+- [Docker](https://www.docker.com/)
+- [VS Code](https://code.visualstudio.com/) avec l'extension [Dev Containers](https://marketplace.visualstudio.com/items?itemName=ms-vscode-remote.remote-containers)
+
+## Démarrage rapide
+
+1. Copier le fichier d'environnement :
 
 ```bash
-uv venv .venv
-source .venv/bin/activate
+cp .devcontainer/.env.template .devcontainer/.env
 ```
 
-2. Install Python dependencies
+2. Ouvrir le projet dans VS Code et lancer **Reopen in Container**.
+
+Le container démarre avec :
+- Python 3.11 + libs géospatiales (GDAL, Shapely, GeoPandas, Fiona, PyProj)
+- PostgreSQL 15 + PostGIS 3.4 accessible sur `localhost:5433`
+- Les dépendances de `requirements.txt` installées automatiquement
+
+## Ajouter une dépendance
+
+| Dépendance | Fichier | Action |
+|---|---|---|
+| Package léger (`pandas`, `requests`…) | `requirements.txt` | Reopen in Container |
+| Lib géospatiale lourde (GDAL, Shapely…) | `Dockerfile` | Rebuild Container |
+
+## Vérifier l'environnement
 
 ```bash
-pip install --upgrade pip
-pip install -r requirements.txt
-```
+# Lister les packages installés
+uv pip list
 
-3. Test GDAL from Python
-
-```bash
+# Vérifier GDAL
 python -c "from osgeo import gdal; print(gdal.VersionInfo())"
-python -c "from osgeo import gdal; print(gdal.__file__)"
+
+# Tester la connexion PostgreSQL
+psql -h $POSTGRES_HOST -U $POSTGRES_USER -d $POSTGRES_DB -c "SELECT PostGIS_Version();"
 ```
 
-Deactivate when done:
+## Variables d'environnement
 
-```bash
-deactivate
-```
+Les credentials PostgreSQL sont définis dans `.devcontainer/.env` (non commité). Voir `.devcontainer/.env.template` pour les variables requises.
+
+## Quand faire un Rebuild Container
+
+| Situation | Action |
+|---|---|
+| Premier clone du repo | Reopen in Container |
+| Modification de `requirements.txt` | Reopen in Container |
+| Modification du `Dockerfile` | Rebuild Container |
