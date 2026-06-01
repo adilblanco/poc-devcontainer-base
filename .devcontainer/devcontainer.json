@@ -1,0 +1,27 @@
+{
+  "name": "GeoData Dev",
+  "dockerComposeFile": ["./docker-compose.yml"],
+  "service": "devcontainer",
+  "workspaceFolder": "/workspace",
+
+  "features": {
+    "ghcr.io/devcontainers/features/docker-in-docker:2": {
+      "version": "latest",
+      "dockerDashComposeVersion": "v2"
+    }
+  },
+
+  "postStartCommand": "git config --global --add safe.directory /workspace",
+  "forwardPorts": [5433],
+  "portsAttributes": {
+    "5433": { "label": "PostgreSQL" }
+  },
+
+  "customizations": {
+    "vscode": {
+      "extensions": []
+    }
+  },
+
+  "remoteUser": "root"
+}
