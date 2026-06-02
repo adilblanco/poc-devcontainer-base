@@ -53,3 +53,11 @@ Les credentials PostgreSQL sont définis dans `.devcontainer/.env` (non commité
 | Premier clone du repo | Reopen in Container |
 | Modification de `requirements.txt` | Reopen in Container |
 | Modification du `Dockerfile` | Rebuild Container |
+
+## Tester une version Python différente
+
+Par défaut, Python 3.11 est utilisé. Pour tester une autre version (ex: 3.12) :
+
+```bash
+docker build --build-arg VARIANT=3.12 -t poc-devcontainer-base .devcontainer/docker
+```
